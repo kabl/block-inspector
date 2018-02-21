@@ -2,3 +2,6 @@
 .node-*
 npm-debug.log
 0x.abi.json
+package-lock.json
+dist/*
+/dist

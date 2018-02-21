@@ -47,13 +47,18 @@ class MethodNameInsp {
         this.methodIdMap = abiDecoder.getMethodIDs();
     }
     inspect(tx, txr, block, findings) {
-        var method = abiDecoder.decodeMethod(tx.input);
-        if (!method) {
-            findings.set("methodName", "Method Hash not found in the ABI!");
-            return;
+        try {
+            var method = abiDecoder.decodeMethod(tx.input);
+            if (!method) {
+                findings.set("methodName", "Method Hash not found in the ABI!");
+                return;
+            }
+            findings.set("methodName", method.name);
+            findings.set("params", method.params);
         }
-        findings.set("methodName", method.name);
-        findings.set("params", method.params);
+        catch (err) {
+            console.error("Unable to decode tx.input: " + tx.input, err);
+        }
     }
 }
 exports.MethodNameInsp = MethodNameInsp;

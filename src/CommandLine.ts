@@ -40,7 +40,7 @@ export class CommandLine {
     },
     {
       header: 'Project Home',
-      content: '[underline]{https://github.com/Zuehlke/block-inspector}'
+      content: '[underline]{https://github.com/kabl/block-inspector}'
     }
   ];
 

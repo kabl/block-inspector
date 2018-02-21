@@ -40,11 +40,16 @@ class ContractObserve {
         let findings = new Map();
         let counter = 0;
         for (let txId of block.transactions) {
-            let tx = this.web3.eth.getTransaction(txId);
-            let txReceipt = this.web3.eth.getTransactionReceipt(txId);
-            if (this.checkRightContract(txReceipt)) {
-                this.inspectors.forEach(inspt => { inspt.inspect(tx, txReceipt, block, findings); });
-                this.printOut(findings);
+            try {
+                let tx = this.web3.eth.getTransaction(txId);
+                let txReceipt = this.web3.eth.getTransactionReceipt(txId);
+                if (this.checkRightContract(txReceipt)) {
+                    this.inspectors.forEach(inspt => { inspt.inspect(tx, txReceipt, block, findings); });
+                    this.printOut(findings);
+                }
+            }
+            catch (error) {
+                console.error("Unable to process TX. txId: " + txId, error);
             }
         }
     }

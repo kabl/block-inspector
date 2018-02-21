@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zuehlke/block-inspector"
+    "url": "https://github.com/kabl/block-inspector"
   },
   "keywords": [
     "ethereum",
@@ -18,16 +18,14 @@
   ],
   "author": "kabl",
   "license": "MIT",
-  "homepage": "https://github.com/Zuehlke/block-inspector",
+  "homepage": "https://github.com/kabl/block-inspector",
   "scripts": {
     "pretest": "tsc",
     "test": "mocha --reporter spec --compilers ts:ts-node/register 'test/**/*.test.ts'",
     "posttest": "rm -Rf ./dist/src",
     "build": "rm -Rf ./dist/src && tsc -p tsconfig-for-debug.json",
     "start": "tsc -p tsconfig-for-debug.json && rm -Rf ./dist/src && node dist/index.js",
-    "startWithParam": "tsc -p tsconfig-for-debug.json && rm -Rf ./dist/src && node dist/index.js --abiPath ../project-notes/bin/ethereum-rinkeby/KSTToken.abi --address 0x9FdAef3016124c515AA07b234086e28B53F8EE75",
-    "startWithParam2": "tsc -p tsconfig-for-debug.json && rm -Rf ./dist/src && node dist/index.js --abiPath ./0x.abi.json --address 0x1D16EF40FAC01cEC8aDAC2AC49427b9384192C05"
-  
+    "startWithParam": "tsc -p tsconfig-for-debug.json && rm -Rf ./dist/src && node dist/index.js --abiPath ../project-notes/bin/ethereum-rinkeby/KSTToken.abi --address 0x9FdAef3016124c515AA07b234086e28B53F8EE75"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.3",
@@ -46,7 +44,7 @@
   },
   "dependencies": {
     "@types/bignumber.js": "^4.0.2",
-    "abi-decoder": "^1.0.8",
+    "abi-decoder": "^1.0.9",
     "body-parser": "^1.17.1",
     "command-line-args": "^4.0.4",
     "command-line-usage": "^4.0.0",

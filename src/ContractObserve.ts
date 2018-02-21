@@ -27,10 +27,11 @@ export class ContractObserve {
         }
 
         this.outputWriter = new OutputWriters.TextOutputWriter();
-    }
+    }   
 
     public start(): void {
         this.web3 = new Web3();
+        //this.web3.setProvider(new this.web3.providers.HttpProvider("https://mainnet.infura.io/Hv61xSPrQ917Lt2STKOR"));
         this.web3.setProvider(new this.web3.providers.HttpProvider(this.configuration.rpcUrl));
 
         this.web3.eth.filter('latest', (error, result) => {
@@ -51,12 +52,16 @@ export class ContractObserve {
         let findings = new Map<String, Object>();
         let counter = 0;
         for (let txId of block.transactions) {
-            let tx = this.web3.eth.getTransaction(txId);
-            let txReceipt = this.web3.eth.getTransactionReceipt(txId);
+            try {
+                let tx = this.web3.eth.getTransaction(txId);
+                let txReceipt = this.web3.eth.getTransactionReceipt(txId);
 
-            if (this.checkRightContract(txReceipt)) {
-                this.inspectors.forEach(inspt => { inspt.inspect(tx, txReceipt, block, findings) });
-                this.printOut(findings);
+                if (this.checkRightContract(txReceipt)) {
+                    this.inspectors.forEach(inspt => { inspt.inspect(tx, txReceipt, block, findings) });
+                    this.printOut(findings);
+                }
+            } catch (error) {
+                console.error("Unable to process TX. txId: " + txId, error);
             }
         }
     }

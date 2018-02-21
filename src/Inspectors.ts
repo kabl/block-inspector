@@ -15,7 +15,7 @@ export class CommonPropsInsp implements Inspectable {
         findings.set("value", tx.value);
 
         var date = new Date(block.timestamp * 1000);
-        var formatted = date.toISOString(); 
+        var formatted = date.toISOString();
         findings.set("timestamp", formatted);
     }
 }
@@ -64,13 +64,17 @@ export class MethodNameInsp implements Inspectable {
 
     inspect(tx: any, txr: any, block: any, findings: Map<String, Object>) {
 
-        var method = abiDecoder.decodeMethod(tx.input);
-        if (!method) {
-            findings.set("methodName", "Method Hash not found in the ABI!");
-            return;
-        }
+        try {
+            var method = abiDecoder.decodeMethod(tx.input);
+            if (!method) {
+                findings.set("methodName", "Method Hash not found in the ABI!");
+                return;
+            }
 
-        findings.set("methodName", method.name);
-        findings.set("params", method.params);
+            findings.set("methodName", method.name);
+            findings.set("params", method.params);
+        } catch (err) {
+            console.error("Unable to decode tx.input: " + tx.input, err);
+        }
     }
 }
